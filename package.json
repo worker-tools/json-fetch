@@ -1,0 +1,26 @@
+{
+  "name": "@werker/json-fetch",
+  "version": "1.0.0",
+  "description": "Enhanced Fetch API to with first class support for JSON objects",
+  "main": "index.js",
+  "files": [
+    "typings",
+    "src",
+    "*.js*",
+    "*.d.ts*"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "clean": "rm -f *.d.ts *.js *.js.map *.d.ts.map",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc -d",
+    "prepack": "npm run clean && npm run build"
+  },
+  "author": "Florian Klampfer <mail@qwtel.com> (https://qwtel.com/)",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.0.3"
+  }
+}
