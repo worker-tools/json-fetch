@@ -31,5 +31,13 @@
   "bugs": {
     "url": "https://github.com/worker-utils/json-fetch/issues"
   },
-  "homepage": "https://github.com/worker-utils/json-fetch#readme"
+  "homepage": "https://github.com/worker-utils/json-fetch#readme",
+  "keywords": [
+    "json",
+    "request",
+    "response",
+    "fetch-api",
+    "search-params",
+    "url-query"
+  ]
 }
