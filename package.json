@@ -1,7 +1,7 @@
 {
   "name": "@werker/json-fetch",
   "version": "1.0.0",
-  "description": "Enhanced Fetch API to with first class support for JSON objects",
+  "description": "Drop-in replacement for fetch, Request, and Response with first class support for JSON objects",
   "main": "index.js",
   "files": [
     "typings",
