@@ -1,24 +1,17 @@
-export class SearchParamsURL extends URL {
-  constructor(
-    url: string | URL,
-    params: URLSearchParams | string[][] | Record<string, string> = {},
-    base: string | URL
-  ) {
-    super(url.toString(), base);
-    const iterable = Array.isArray(params) || params instanceof URLSearchParams ? params : Object.entries(params);
-    for (const [k, v] of iterable) this.searchParams.append(k, v);
-  }
-}
+export type JSONPrimitive = string | number | boolean | null;
+export type JSONable = { toJSON: (k?: string) => JSONValue };
+export type JSONObject = { [k: string]: JSONValue };
+export type JSONArray = JSONValue[];
+export type JSONValue = JSONPrimitive | JSONObject | JSONArray | JSONable;
 
-export {
-  SearchParamsURL as SearchURL,
-  SearchParamsURL as ParamsURL,
-}
-
-export type JSONBodyInit = object | BodyInit;
+export type JSONBodyInit = JSONValue | BodyInit;
 export type JSONRequestInit = { body?: JSONBodyInit | null } & Omit<RequestInit, 'body'>;
 
-function isBodyInit(b: JSONBodyInit) {
+/**
+ * Tests is the argument is a Fetch API `BodyInit`. 
+ * Assumed to be `JSONValue` otherwise.
+ */
+function isBodyInit(b: JSONBodyInit): b is BodyInit {
   return (
     b == null ||
     typeof b === 'string' ||
@@ -37,19 +30,23 @@ export class JSONRequest extends Request {
   constructor(
     input: RequestInfo | URL,
     init?: JSONRequestInit,
-    replacer?: (this: any, key: string, value: any) => any,
-    space?: string | number,
+    replacer?: Parameters<typeof JSON.stringify>[1],
+    space?: Parameters<typeof JSON.stringify>[2],
   ) {
     const { headers: h, body: b, ...i } = init || {};
 
-    const bi = isBodyInit(b);
-    const body = bi ? b as BodyInit : JSON.stringify(b, replacer, space);
+    let isBI: boolean
+    const body = (isBI = isBodyInit(b))
+      ? b
+      : JSON.stringify(b, replacer, space);
 
     const headers = new Headers(h);
-    if (!headers.has('Content-Type') && !bi) headers.set('Content-Type', JSONRequest.contentType);
-    if (!headers.has('Accept')) headers.set('Accept', JSONRequest.accept);
+    if (!headers.has('Content-Type') && !isBI)
+      headers.set('Content-Type', JSONRequest.contentType);
+    if (!headers.has('Accept'))
+      headers.set('Accept', JSONRequest.accept);
 
-    super(input instanceof URL ? input.toString() : input, { headers, body, ...i });
+    super(input instanceof URL ? input.href : input, { headers, body, ...i });
   }
 }
 
@@ -59,46 +56,26 @@ export class JSONResponse extends Response {
   constructor(
     body: JSONBodyInit | null,
     init?: ResponseInit,
-    replacer?: (this: any, key: string, value: any) => any,
-    space?: string | number,
+    replacer?: Parameters<typeof JSON.stringify>[1],
+    space?: Parameters<typeof JSON.stringify>[2],
   ) {
     const { headers: h, ...i } = init || {};
 
-    const bi = isBodyInit(body)
-    const b = bi ? body as BodyInit : JSON.stringify(body, replacer, space);
+    let isBI: boolean
+    const b = (isBI = isBodyInit(body))
+      ? body
+      : JSON.stringify(body, replacer, space);
 
     const headers = new Headers(h);
-    if (!headers.has('Content-Type') && !bi) headers.set('Content-Type', JSONResponse.contentType);
+    if (!headers.has('Content-Type') && !isBI)
+      headers.set('Content-Type', JSONResponse.contentType);
 
     super(b, { headers, ...i });
   }
 }
 
-/** @deprecated Use SearchParamsURL instead */
-export const urlWithParams = (
-  url: string | URL,
-  params: { [name: string]: string },
-  base: string | URL
-) => {
-  return new SearchParamsURL(url, params, base).href;
+export function jsonFetch(...args: ConstructorParameters<typeof JSONRequest>) {
+  return fetch(new JSONRequest(...args));
 }
 
-export function jsonFetch(
-  input: RequestInfo | URL,
-  init?: JSONRequestInit,
-  replacer?: (this: any, key: string, value: any) => any,
-  space?: string | number,
-) {
-  return fetch(new JSONRequest(input, init, replacer, space));
-}
-
-// function isPOJO(arg) {
-//   if (arg == null || typeof arg !== 'object') {
-//     return false;
-//   }
-//   const proto = Object.getPrototypeOf(arg);
-//   if (proto == null) {
-//     return true; // `Object.create(null)`
-//   }
-//   return proto === Object.prototype;
-// }
+export * from './search-params-url'
