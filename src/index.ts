@@ -11,7 +11,7 @@ export type JSONRequestInit = { body?: JSONBodyInit | null } & Omit<RequestInit,
  * Tests is the argument is a Fetch API `BodyInit`. 
  * Assumed to be `JSONValue` otherwise.
  */
-function isBodyInit(b: JSONBodyInit): b is BodyInit {
+function isBodyInit(b?: JSONBodyInit): b is BodyInit {
   return (
     b == null ||
     typeof b === 'string' ||
