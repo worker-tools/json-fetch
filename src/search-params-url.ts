@@ -4,8 +4,8 @@ export type SearchParamsInit = URLSearchParams | string[][] | Record<string, str
 export class SearchParamsURL extends URL {
   constructor(
     url: string | URL,
-    params: SearchParamsInit,
-    base: string | URL
+    params?: SearchParamsInit | null,
+    base?: string | URL
   ) {
     super(url as string, base);
     const iterable = Array.isArray(params) || params instanceof URLSearchParams 

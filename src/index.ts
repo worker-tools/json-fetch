@@ -1,10 +1,4 @@
-export type JSONPrimitive = string | number | boolean | null;
-export type JSONable = { toJSON: (k?: string) => JSONValue };
-export type JSONObject = { [k: string]: JSONValue };
-export type JSONArray = JSONValue[];
-export type JSONValue = JSONPrimitive | JSONObject | JSONArray | JSONable;
-
-export type JSONBodyInit = JSONValue | BodyInit;
+export type JSONBodyInit = BodyInit | any;
 export type JSONRequestInit = { body?: JSONBodyInit | null } & Omit<RequestInit, 'body'>;
 
 /**
