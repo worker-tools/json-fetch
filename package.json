@@ -29,12 +29,12 @@
   "dependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/worker-utils/json-fetch.git"
+    "url": "git+https://github.com/worker-tools/json-fetch.git"
   },
   "bugs": {
-    "url": "https://github.com/worker-utils/json-fetch/issues"
+    "url": "https://github.com/worker-tools/json-fetch/issues"
   },
-  "homepage": "https://github.com/worker-utils/json-fetch#readme",
+  "homepage": "https://github.com/worker-tools/json-fetch#readme",
   "keywords": [
     "json",
     "request",
