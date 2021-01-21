@@ -20,7 +20,7 @@ const response = await fetch('/some', {
 After:
 
 ```ts
-import { JSONRequest } from '@werker/json-fetch';
+import { JSONRequest } from '@worker-tools/json-fetch';
 
 const response = await fetch(new JSONRequest('/some', { 
   method: 'POST', 
@@ -31,7 +31,7 @@ const response = await fetch(new JSONRequest('/some', {
 You can also use the updated `jsonFetch` function:
 
 ```ts
-import { jsonFetch as fetch } from '@werker/json-fetch';
+import { jsonFetch as fetch } from '@worker-tools/json-fetch';
 
 const response = await fetch('/some', { method: 'POST', body: data })
 ```
