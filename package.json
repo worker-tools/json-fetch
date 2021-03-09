@@ -1,6 +1,6 @@
 {
   "name": "@worker-tools/json-fetch",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Drop-in replacement for fetch, Request, and Response with first class support for JSON objects",
   "type": "module",
   "main": "index.js",
@@ -30,7 +30,6 @@
   "devDependencies": {
     "typescript": "^4.0.3"
   },
-  "dependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/worker-tools/json-fetch.git"
