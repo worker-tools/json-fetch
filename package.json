@@ -21,14 +21,14 @@
   },
   "scripts": {
     "clean": "rm -f *.d.ts *.js *.js.map *.d.ts.map *.tgz",
-    "test": "echo \"Error: no test specified\" && exit 0",
+    "test": "echo \"Warning: no test specified\" && exit 0",
     "build": "tsc -d",
     "prepack": "npm run clean && npm run build"
   },
   "author": "Florian Klampfer <mail@qwtel.com> (https://qwtel.com/)",
   "license": "MIT",
   "devDependencies": {
-    "typescript": "^4.0.3"
+    "typescript": "^4.5.5"
   },
   "repository": {
     "type": "git",
