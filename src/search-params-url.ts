@@ -1,4 +1,4 @@
-export type SearchParamsInit = URLSearchParams | string[][] | Record<string, string>;
+export type SearchParamsInit = URLSearchParams | [string, any][] | Record<string, any>;
 
 // This could be it's own module...
 export class SearchParamsURL extends URL {
