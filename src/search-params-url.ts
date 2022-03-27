@@ -1,4 +1,5 @@
-export type SearchParamsInit = URLSearchParams | [string, any][] | Record<string, any>;
+export type Stringable = { toString(...args: any[]): string }
+export type SearchParamsInit = URLSearchParams | [string, Stringable][] | Record<string, Stringable>;
 
 // This could be it's own module...
 export class SearchParamsURL extends URL {
@@ -10,9 +11,9 @@ export class SearchParamsURL extends URL {
     super(url as string, base);
     const iterable = Array.isArray(params) || params instanceof URLSearchParams 
       ? params 
-      : Object.entries(params || {});
+      : Object.entries(params ?? {});
     for (const [k, v] of iterable) 
-      this.searchParams.append(k, v);
+      this.searchParams.append(k, v as string);
   }
 }
 
