@@ -1,6 +1,6 @@
 {
   "name": "@worker-tools/json-fetch",
-  "version": "2.0.7-pre.1",
+  "version": "2.0.7-pre.2",
   "description": "Drop-in replacement for fetch, Request, and Response with first class support for JSON objects",
   "type": "module",
   "main": "index.js",
