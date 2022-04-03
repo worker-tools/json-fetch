@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-cond-assign
 export type JSONBodyInit = BodyInit | any;
 export type JSONRequestInit = { body?: JSONBodyInit | null } & Omit<RequestInit, 'body'>;
 
@@ -72,4 +73,4 @@ export function jsonFetch(...args: ConstructorParameters<typeof JSONRequest>) {
   return fetch(new JSONRequest(...args));
 }
 
-export * from './search-params-url'
+export * from './search-params-url.ts'
