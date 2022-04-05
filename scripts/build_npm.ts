@@ -15,7 +15,7 @@ const name = basename(Deno.cwd())
 await build({
   entryPoints: ["./index.ts", {
     name: './search-params-url',
-    path: 'search-params-url.ts'
+    path: './search-params-url.ts'
   }],
   outDir: "./npm",
   shims: {},
@@ -43,14 +43,8 @@ await build({
   packageManager: 'pnpm',
   compilerOptions: {
     sourceMap: true,
-    target: 'ES2021'
+    target: 'ES2019'
   },
-  // mappings: {
-  //   "https://esm.sh/cookie-store-interface@0.1.1/index.js": {
-  //     name: "cookie-store-interface",
-  //     version: "^0.1.1",
-  //   },
-  // },
 });
 
 // post build steps
