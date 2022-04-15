@@ -1,7 +1,10 @@
-export type Stringable = { toString(...args: any[]): string }
-export type SearchParamsInit = URLSearchParams | [string, Stringable][] | Record<string, Stringable>;
+// deno-lint-ignore no-explicit-any
+export type SearchParamsInit = [string, any][] | Record<string, any> | string | URLSearchParams;
 
 // This could be it's own module...
+/**
+ * Like `URL`, but accepts a `params` argument that is added to the search parameters/query string.
+ */
 export class SearchParamsURL extends URL {
   constructor(
     url: string | URL,
@@ -11,9 +14,11 @@ export class SearchParamsURL extends URL {
     super(url as string, base);
     const iterable = Array.isArray(params) || params instanceof URLSearchParams 
       ? params 
-      : Object.entries(params ?? {});
+      : typeof params === 'string'
+        ? new URLSearchParams(params)
+        : Object.entries(params ?? {})
     for (const [k, v] of iterable) 
-      this.searchParams.append(k, v as string);
+      this.searchParams.append(k, v.toString());
   }
 }
 

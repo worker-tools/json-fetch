@@ -1,4 +1,5 @@
 // deno-lint-ignore-file no-cond-assign
+// deno-lint-ignore no-explicit-any
 export type JSONBodyInit = BodyInit | any;
 export type JSONRequestInit = { body?: JSONBodyInit | null } & Omit<RequestInit, 'body'>;
 
@@ -28,20 +29,20 @@ export class JSONRequest extends Request {
     replacer?: Parameters<typeof JSON.stringify>[1],
     space?: Parameters<typeof JSON.stringify>[2],
   ) {
-    const { headers: h, body: b, ...i } = init || {};
+    const { headers: _headers, body: _body, ..._init } = init || {};
 
     let isBI: boolean
-    const body = (isBI = isBodyInit(b))
-      ? b
-      : JSON.stringify(b, replacer, space);
+    const body = (isBI = isBodyInit(_body))
+      ? _body
+      : JSON.stringify(_body, replacer, space);
 
-    const headers = new Headers(h);
+    const headers = new Headers(_headers);
     if (!headers.has('Content-Type') && !isBI)
       headers.set('Content-Type', JSONRequest.contentType);
     if (!headers.has('Accept'))
       headers.set('Accept', JSONRequest.accept);
 
-    super(input instanceof URL ? input.href : input, { headers, body, ...i });
+    super(input instanceof URL ? input.href : input, { headers, body, ..._init });
   }
 }
 
@@ -54,18 +55,18 @@ export class JSONResponse extends Response {
     replacer?: Parameters<typeof JSON.stringify>[1],
     space?: Parameters<typeof JSON.stringify>[2],
   ) {
-    const { headers: h, ...i } = init || {};
+    const { headers: _headers, ..._init } = init || {};
 
     let isBI: boolean
-    const b = (isBI = isBodyInit(body))
+    const _body = (isBI = isBodyInit(body))
       ? body
       : JSON.stringify(body, replacer, space);
 
-    const headers = new Headers(h);
+    const headers = new Headers(_headers);
     if (!headers.has('Content-Type') && !isBI)
       headers.set('Content-Type', JSONResponse.contentType);
 
-    super(b, { headers, ...i });
+    super(_body, { headers, ..._init });
   }
 }
 
