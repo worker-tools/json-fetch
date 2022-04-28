@@ -18,7 +18,7 @@ export class SearchParamsURL extends URL {
         ? new URLSearchParams(params)
         : Object.entries(params ?? {})
     for (const [k, v] of iterable) 
-      this.searchParams.append(k, v.toString());
+      this.searchParams.append(k, '' + v);
   }
 }
 
