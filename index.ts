@@ -50,7 +50,7 @@ export class JSONResponse extends Response {
   static contentType = 'application/json;charset=UTF-8';
 
   constructor(
-    body: JSONBodyInit | null,
+    body?: JSONBodyInit | null,
     init?: ResponseInit,
     replacer?: Parameters<typeof JSON.stringify>[1],
     space?: Parameters<typeof JSON.stringify>[2],
